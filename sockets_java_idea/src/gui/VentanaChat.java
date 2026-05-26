@@ -2,14 +2,10 @@ package gui;
 
 import datos.Mensaje;
 import cliente.tcp.ClienteEnviaTCP2;
-import cliente.tcp.ClienteTCP;
 import cliente.udp.ClienteEnviaUDP2;
 import cliente.udp.ClienteEscuchaUDP2;
-import cliente.udp.ClienteUDP;
 import servidor.tcp.ServidorEscuchaTCP2;
-import servidor.tcp.ServidorTCP;
 import servidor.udp.ServidorEscuchaUDP2;
-import servidor.udp.ServidorUDP;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -64,14 +60,10 @@ public class VentanaChat extends JFrame {
     private String nombreUsuario = "Usuario";
 
     // Servidor
-    private ServidorTCP servidorTCP;
-    private ServidorUDP servidorUDP;
     private ServidorEscuchaTCP2 escuchaTCP;
     private ServidorEscuchaUDP2 escuchaUDP;
 
     // Cliente
-    private ClienteTCP clienteTCP;
-    private ClienteUDP clienteUDP;
     private ClienteEnviaTCP2 clienteEnviaTCP;
     private ClienteEnviaUDP2 clienteEnviaUDP;
     private ClienteEscuchaUDP2 clienteEscuchaUDP;
@@ -439,13 +431,11 @@ public class VentanaChat extends JFrame {
         try {
             agregarLogMensaje("Sistema", "Iniciando servidores en red local...", true, false);
 
-            servidorTCP = new ServidorTCP(puertoTCP);
             // Pasar la referencia de esta VentanaChat para actualizar logs
             escuchaTCP = new ServidorEscuchaTCP2(puertoTCP);
             escuchaTCP.setVentana(this);
             escuchaTCP.start();
 
-            servidorUDP = new ServidorUDP(puertoUDP);
             escuchaUDP = new ServidorEscuchaUDP2(puertoUDP);
             escuchaUDP.setVentana(this);
             escuchaUDP.start();
@@ -473,7 +463,6 @@ public class VentanaChat extends JFrame {
 
             // 1. TCP Connection
             // Creamos socket e hilo emisor/receptor
-            clienteTCP = new ClienteTCP(ip, puertoTCP);
             clienteEnviaTCP = new ClienteEnviaTCP2(ip, puertoTCP);
             clienteEnviaTCP.setVentana(this);
             clienteEnviaTCP.start();
